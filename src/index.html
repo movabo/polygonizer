@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polygonizer</title>
+  <script src="./index.ts" type="module" defer></script>
+  <style>
+    body {
+      font-family: "Comic Sans MS", fantasy;
+      background-color: rgb(176, 233, 193);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <hgroup>
+      <h1>Polygonizer</h1>
+      <p>Turn your profile picture into an arbitrary* polygon</p>
+    </hgroup>
+  </header>
+
+  <main>
+    <canvas id="canvas"></canvas>
+    <br>
+    <label>
+      Choose file (or drop onto page)
+      <br>
+      <input type="file" id="i_file" />
+    </label>
+    <br>
+    <label>
+      Sides
+      <br>
+      <input type="number" id="i_sides" min="0" value="5">
+    </label>
+    <br>
+    <label>
+      Rotation
+      <br>
+      <input type="range" id="i_rotation" value="0" min="-360" max="360">
+      <span data-output="rotation">0.0</span>°
+    </label>
+    <br>
+    <button id="btn_save">Save</button>
+  </main>
+
+  <footer>
+    <p>* non-hexagonal</p>
+  </footer>
+</body>
+</html>
