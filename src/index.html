@@ -6,12 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Polygonizer</title>
   <script src="./index.ts" type="module" defer></script>
-  <style>
-    body {
-      font-family: "Comic Sans MS", fantasy;
-      background-color: rgb(176, 233, 193);
-    }
-  </style>
+  <link rel="stylesheet" href="./polygonizer.css">
 </head>
 <body>
   <header>
@@ -22,13 +17,15 @@
   </header>
 
   <main>
-    <canvas id="canvas"></canvas>
+    <button id="dropzone">
+      <div id="dropzone-overlay">
+        Choose image
+        <small>or drop here</small>
+      </div>
+      <canvas id="canvas"></canvas>
+    </button>
     <br>
-    <label>
-      Choose file (or drop onto page)
-      <br>
-      <input type="file" id="i_file" />
-    </label>
+    <input type="file" id="i_file" style="display: none;" />
     <br>
     <label>
       Sides
