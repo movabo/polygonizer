@@ -1,7 +1,10 @@
 import Polygonizer from './polygonizer';
+import Toaster, { ToastType } from './toast';
+import polygonName from './util/polygon-name';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const p = new Polygonizer(canvas);
+const toaster = new Toaster();
 
 const iFile = document.getElementById('i_file') as HTMLInputElement;
 const iSides = document.getElementById('i_sides') as HTMLInputElement;
@@ -12,6 +15,8 @@ const dropzone = document.getElementById('dropzone') as HTMLButtonElement;
 const dropzoneOverlay = document.getElementById(
   'dropzone-overlay',
 ) as HTMLButtonElement;
+
+let filename = 'profile';
 
 iSides.addEventListener('input', (ev) => {
   const target = ev.currentTarget as HTMLInputElement;
@@ -37,10 +42,14 @@ function imageFromFile(file: File): HTMLImageElement {
   const img = document.createElement('img');
   img.src = url;
   img.addEventListener('error', () => {
-    console.log('Could not load image');
+    toaster.toast(
+      'Could not load image. This could be because the file format is not recognized.',
+      ToastType.Error,
+    );
   });
   img.addEventListener('load', () => {
     document.body.classList.add('has-image');
+    filename = file.name.split('.').slice(0, -1).join('.');
   });
   return img;
 }
@@ -83,16 +92,16 @@ iFile.addEventListener('change', (ev) => {
 });
 
 btnSave.addEventListener('click', () => {
-  download();
+  download(`${filename}.${polygonName(p.sides)}.png`);
 });
 
 dropzone.addEventListener('click', () => {
   iFile.click();
 });
 
-function download() {
+function download(filename = 'profile.png') {
   const a = document.createElement('a');
-  a.download = 'profile.png';
+  a.download = filename;
   a.href = p.canvas.toDataURL('image/png');
   a.click();
 }
