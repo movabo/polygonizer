@@ -1,3 +1,5 @@
+export type PolygonizerEventType = 'render';
+
 export default class Polygonizer {
   private _sides = 5;
   public get sides() {
@@ -46,6 +48,10 @@ export default class Polygonizer {
       value.addEventListener('load', this.render.bind(this), { once: true });
     }
   }
+
+  private eventHandlers: Record<PolygonizerEventType, Array<() => void>> = {
+    render: [],
+  };
 
   constructor(public canvas: HTMLCanvasElement) {
     this.render();
@@ -123,6 +129,22 @@ export default class Polygonizer {
       ctx.setLineDash([20, 15]);
       ctx.stroke();
     }
+
+    this.triggerEvent('render');
+  }
+
+  on(eventType: PolygonizerEventType, handler: () => void) {
+    this.eventHandlers[eventType].push(handler);
+  }
+
+  off(eventType: PolygonizerEventType, handler: () => void) {
+    this.eventHandlers[eventType] = this.eventHandlers[eventType].filter(
+      (h) => h !== handler,
+    );
+  }
+
+  private triggerEvent(eventType: PolygonizerEventType) {
+    this.eventHandlers[eventType].forEach((handler) => handler());
   }
 }
 
