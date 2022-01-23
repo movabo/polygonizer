@@ -5,45 +5,50 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Polygonizer</title>
+  <script src="/node_modules/focus-visible/dist/focus-visible.min.js" defer></script>
   <script src="./index.ts" type="module" defer></script>
   <link rel="stylesheet" href="./polygonizer.css">
 </head>
 <body>
   <header>
-    <hgroup>
+    <hgroup class="stack">
       <h1>Polygonizer</h1>
-      <p>Turn your profile picture into an arbitrary* polygon</p>
+      <p>Turn your profile picture into any* polygon</p>
     </hgroup>
   </header>
 
-  <main>
+  <main class="stack">
     <button id="dropzone">
       <div id="dropzone-overlay">
-        Choose image
-        <small>or drop here</small>
+        Click to choose image
+        <small>or drag and drop</small>
       </div>
       <canvas id="canvas"></canvas>
     </button>
-    <br>
-    <input type="file" id="i_file" style="display: none;" />
-    <br>
-    <label>
-      Sides
-      <br>
-      <input type="number" id="i_sides" min="0" value="5">
-    </label>
-    <br>
-    <label>
-      Rotation
-      <br>
-      <input type="range" id="i_rotation" value="0" min="-360" max="360">
-      <span data-output="rotation">0.0</span>°
-    </label>
-    <br>
-    <button id="btn_save">Save</button>
+    <input type="file" id="i_file" style="display: none;" accept="image/*">
+    <form id="form">
+      <label for="i_sides">
+        Sides
+      </label>
+      <span>
+        <span class="input-group">
+          <button aria-hidden tabindex="-1" id="btn_sides_minus">&minus;</button>
+          <input type="number" id="i_sides" min="0" value="5" size="3" inputmode="decimal">
+          <button aria-hidden tabindex="-1" id="btn_sides_plus">+</button>
+        </span>
+      </span>
+      <label for="i_rotation">
+        Rotation
+      </label>
+      <span>
+        <input type="range" id="i_rotation" value="0" min="-360" max="360" step="5">
+        <output><span data-output="rotation">0</span>°</output>
+      </span>
+      <button id="btn_save" class="button" type="submit">Download</button>
+    </form>
   </main>
 
-  <footer>
+  <footer class="stack">
     <p>* non-hexagonal</p>
   </footer>
 </body>

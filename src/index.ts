@@ -9,33 +9,61 @@ const toaster = new Toaster();
 const iFile = document.getElementById('i_file') as HTMLInputElement;
 const iSides = document.getElementById('i_sides') as HTMLInputElement;
 const iRotation = document.getElementById('i_rotation') as HTMLInputElement;
-const btnSave = document.getElementById('btn_save') as HTMLButtonElement;
+const btnSidesPlus = document.getElementById(
+  'btn_sides_plus',
+) as HTMLInputElement;
+const btnSidesMinus = document.getElementById(
+  'btn_sides_minus',
+) as HTMLInputElement;
+const form = document.getElementById('form') as HTMLFormElement;
 
 const dropzone = document.getElementById('dropzone') as HTMLButtonElement;
-const dropzoneOverlay = document.getElementById(
-  'dropzone-overlay',
-) as HTMLButtonElement;
 
 let filename = 'profile';
 
+function validateValue(value: number, prevValue = -Infinity) {
+  if (value === 6) {
+    if (prevValue < 6) return 7;
+    return 5;
+  }
+  return Math.max(3, value);
+}
+
 iSides.addEventListener('input', (ev) => {
   const target = ev.currentTarget as HTMLInputElement;
-  let newValue = parseFloat(target.value);
-  if (newValue === 6) {
-    if (p.sides < 6) newValue = 7;
-    else newValue = 5;
-    target.value = newValue as any;
-  }
-  p.sides = newValue;
+  p.sides = validateValue(parseFloat(target.value), p.sides);
 });
 
-iRotation.addEventListener('input', (ev) => {
+iSides.addEventListener('change', (ev) => {
+  iSides.value = p.sides as any;
+  btnSidesMinus.disabled = p.sides <= 3;
+});
+
+btnSidesMinus.addEventListener('click', (ev) => {
+  ev.preventDefault();
+  p.sides = validateValue(parseFloat(iSides.value) - 1, p.sides);
+  iSides.value = p.sides as any;
+  btnSidesMinus.disabled = p.sides <= 3;
+  iSides.focus();
+});
+
+btnSidesPlus.addEventListener('click', (ev) => {
+  ev.preventDefault();
+  p.sides = validateValue(parseFloat(iSides.value) + 1, p.sides);
+  iSides.value = p.sides as any;
+  btnSidesMinus.disabled = p.sides <= 3;
+  iSides.focus();
+});
+
+iRotation.addEventListener('change', handleRotationChange);
+iRotation.addEventListener('input', handleRotationChange);
+function handleRotationChange(ev: Event) {
   const rotation = parseFloat((ev.currentTarget as HTMLInputElement).value);
   p.rotation = rotation;
   [...document.querySelectorAll('[data-output="rotation"]')].forEach(
-    (output) => (output.textContent = rotation.toFixed(1).replace('-', '−')),
+    (output) => (output.textContent = rotation.toFixed(0).replace('-', '−')),
   );
-});
+}
 
 function imageFromFile(file: File): HTMLImageElement {
   const url = URL.createObjectURL(file);
@@ -43,7 +71,7 @@ function imageFromFile(file: File): HTMLImageElement {
   img.src = url;
   img.addEventListener('error', () => {
     toaster.toast(
-      'Could not load image. This could be because the file format is not recognized.',
+      'Could not load image. Are you sure it’s an image file?',
       ToastType.Error,
     );
   });
@@ -91,7 +119,8 @@ iFile.addEventListener('change', (ev) => {
   p.image = imageFromFile(target.files[0]);
 });
 
-btnSave.addEventListener('click', () => {
+form.addEventListener('submit', (ev) => {
+  ev.preventDefault();
   download(`${filename}.${polygonName(p.sides)}.png`);
 });
 

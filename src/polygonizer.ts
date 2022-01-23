@@ -56,6 +56,7 @@ export default class Polygonizer {
     const h = this.size;
     const sides = this.sides;
     const rot = ((this.rotation + 90) / 180) * Math.PI;
+    const imageIsLoaded = Boolean(this.image?.width);
 
     this.canvas.width = w;
     this.canvas.height = h;
@@ -83,11 +84,11 @@ export default class Polygonizer {
 
     const n = 0.23 * sides ** 2 - 0.14 * sides + 0.76;
     drawEllipse(sides, n);
-    ctx.fillStyle = '#ccc';
+    ctx.fillStyle = imageIsLoaded ? '#fff' : 'rgba(255, 255, 255, 0.6)';
     ctx.fill();
 
     ctx.resetTransform();
-    if (this.image) {
+    if (imageIsLoaded) {
       ctx.globalCompositeOperation = 'source-in';
       const scale = this.size / Math.min(this.image.width, this.image.height);
 

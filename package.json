@@ -10,5 +10,8 @@
   },
   "scripts": {
     "start": "parcel src/index.html"
+  },
+  "dependencies": {
+    "focus-visible": "^5.2.0"
   }
 }
