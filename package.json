@@ -2,7 +2,6 @@
   "name": "polygonizer",
   "version": "1.0.0",
   "description": "Clip your avatar along a polygon with any number of sides, except six",
-  "main": "index.js",
   "author": "Philipp Bock <p@philippbock.com>",
   "license": "MIT",
   "devDependencies": {

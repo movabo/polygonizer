@@ -21,6 +21,7 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.4;
   font-size: 16px;
+  max-width: calc(400px + 2em);
 
   --text-color: hsl(249, 21%, 98%);
   --text-color-inverted: hsl(249, 21%, 2%);
@@ -42,7 +43,8 @@ body > main {
 }
 
 body > footer {
-  opacity: 0.5;
+  margin-top: 2em;
+  font-size: 0.9em;
 }
 
 h1 {
@@ -62,6 +64,16 @@ hgroup.stack > * + * {
 
 .stack > * + * {
   margin-top: 0.5em;
+}
+
+a:link,
+a:visited {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 #dropzone {
