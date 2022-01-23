@@ -6,7 +6,8 @@
   "author": "Philipp Bock <p@philippbock.com>",
   "license": "MIT",
   "devDependencies": {
-    "parcel": "^2.2.1"
+    "parcel": "^2.2.1",
+    "sharp": "^0.29.1"
   },
   "scripts": {
     "start": "parcel src/index.html"
