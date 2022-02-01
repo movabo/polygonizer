@@ -5,7 +5,7 @@ const names = [
   'triangle',
   'square',
   'pentagon',
-  null,
+  'hexagon',
   'heptagon',
   'octagon',
   'nonagon',

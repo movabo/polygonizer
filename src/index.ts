@@ -22,10 +22,6 @@ const dropzone = document.getElementById('dropzone') as HTMLButtonElement;
 let filename = 'profile';
 
 function validateValue(value: number, prevValue = -Infinity) {
-  if (value === 6) {
-    if (prevValue < 6) return 7;
-    return 5;
-  }
   return Math.max(3, value);
 }
 
